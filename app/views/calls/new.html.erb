@@ -1,0 +1,9 @@
+<%= form_tag calls_url, method: 'post' do  %>
+<%= label_tag 'call' %>
+<%= text_field_tag 'call' %>
+
+<%= label_tag 'comment' %>
+<%= text_field_tag 'comment' %>
+
+<%= submit_tag "Submit" %>
+<% end %>

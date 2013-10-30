@@ -1,0 +1,16 @@
+<h1><%= @call.description %></h1>
+<h4><%= @call.comment %></h4>
+
+<% @call.comments.each do |comment| %>
+<p><%= comment.text %></p>
+<% end %>
+
+
+<%= form_tag create_comment_url do %>
+<%= label_tag 'text', '' %>
+<%= text_field_tag 'text', nil,  placeholder: 'Add a comment...', size: '90' %>
+
+<p><%= hidden_field_tag 'call_id', @call.id %></p>
+
+<%= submit_tag "Comment" %>
+<% end %>

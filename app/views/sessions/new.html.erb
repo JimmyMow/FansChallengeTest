@@ -1,0 +1,138 @@
+<style type="text/css">
+      #landing-info{
+  height: 403px;
+  border-radius: 5px;
+}
+
+#landing-info h1{
+  margin-top: 0px;
+  padding-top: 25px;
+  padding-left: 0px;
+  color: #ce3e3c;
+  font-size: 44px;
+  font-weight: bold;
+}
+
+#landing-info h2{
+  margin-top: 0px;
+  padding-top: 50px;
+  padding-left: 50px;
+  font-size: 21px;
+  font-weight: bold;
+}
+
+#landing-info iframe{
+  margin-left: 16px;
+  border: solid 1px #ce3c3e;
+}
+
+/*LANDING PAGE SIGN IN BOX*/
+#signin-box{
+  background-color: #dde1e6;
+  padding-top: 5px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  margin-top: 82px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+#remember-me{
+  margin-right: 2.5px;
+  color: #858282;
+  font-size: 12px;
+}
+
+#forgot-password{
+  margin-left: 2.5px;
+  font-size: 12px;
+}
+
+/*LANDING PAGE SIGN UP BOX*/
+#signup-box{
+  float: right;
+  background-color: #dde1e6;
+  padding-top: 5px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+  color: #ce3c3e;
+}
+
+#signup{
+  color: #858282;
+}
+
+#signup-header{
+  padding-right: 12px;
+  padding-bottom: 10px;
+  padding-left: 12px;
+  margin-top: 5px;
+  border-bottom: solid 1px #858282;
+  font-size: 20px;
+}
+
+/*CLASSES & HTML ELEMENTS*/
+.navbar{
+  margin-bottom: 20px;
+}
+
+.form-control{
+  margin: 5px auto;
+}
+</style>
+
+    <div class='container'>
+      <div class='content'>
+        <div class='col-lg-8'>
+          <div id='landing-info'>
+            <h1>Welcome to The Fan's Challenge</h1>
+            <iframe width="650" height="400" src="http://www.youtube.com/embed/XsML3WZDOrQ" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div id='signin-box' class='col-lg-12'>
+            <h2 id='signup-header'><span id='signup'>Sign In</span></h2>
+          <%= form_tag session_url, method: 'post', class: 'form-signin' do %>
+          <!-- <input type='text' class='form-control' placeholder='Email' autofocus> -->
+          <%= label_tag 'username', 'Username:', class: 'sr-only' %>
+          <%= text_field_tag 'username', nil, class: 'form-control', placeholder: 'Username' %>
+          <%= label_tag 'password', 'Password:', class: 'sr-only' %>
+          <%= password_field_tag 'password', nil, class: 'form-control', placeholder: 'Password' %>
+          <!-- <button class='btn btn-danger btn-block' type='submit'>Sign In</button> -->
+          <%= submit_tag 'Sign In', class: 'btn btn-danger btn-block' %>
+          <% end %>
+          </div>
+          <div id='signup-box' class='col-lg-12'>
+            <h2 id='signup-header'>New to The Fan's Challenge? <span id='signup'>Sign Up</span></h2>
+            <%= form_tag users_url, method: 'post', class: 'form-signup' do %>
+
+            <%= label_tag 'first_name', 'First Name:', class: 'sr-only' %>
+            <%= text_field_tag 'first_name', nil, class: 'form-control', placeholder: 'First Name'  %>
+
+            <%= label_tag 'last_name', 'Last Name:', class: 'sr-only' %>
+            <%= text_field_tag 'last_name', nil, class: 'form-control', placeholder: 'Last Name'  %>
+
+            <%= label_tag 'email', 'Email:', class: 'sr-only' %>
+            <%= text_field_tag 'email', nil, class: 'form-control', placeholder: 'Email'  %>
+
+            <%= label_tag 'username', 'Username:', class: 'sr-only' %>
+            <%= text_field_tag 'username', nil, class: 'form-control', placeholder: 'Username'  %>
+
+            <%= label_tag 'password', 'Password:', class: 'sr-only' %>
+            <%= password_field_tag 'password', nil, class: 'form-control', placeholder: 'Password'  %>
+
+            <%= label_tag 'password_confirmation', 'Confirm Password:', class: 'sr-only' %>
+            <%= password_field_tag 'password_confirmation', nil, class: 'form-control', placeholder: 'Confirm Password'  %>
+
+            <%= submit_tag "Sign Up", class: 'btn btn-success btn-block' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

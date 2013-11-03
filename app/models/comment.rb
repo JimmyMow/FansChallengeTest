@@ -1,3 +1,5 @@
 class Comment < ActiveRecord::Base
-  belongs_to :call
+  belongs_to :violation
+  belongs_to :user
+
 end

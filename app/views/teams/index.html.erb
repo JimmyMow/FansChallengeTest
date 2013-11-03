@@ -1,0 +1,9 @@
+<style type="text/css">
+  li {
+    list-style-type: none;
+  }
+</style>
+
+<% @teams.each do |team| %>
+  <li><h1><%= link_to team.name, team_url(team.id) %></h1></li>
+<% end %>

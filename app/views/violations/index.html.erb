@@ -1,0 +1,13 @@
+<h2>Fuck These violations:</h2>
+
+<div class='container'>
+<% @violations.each do |violations| %>
+
+<h1><%= link_to "#{violation.description}", violation_url(violation.id), :class => 'description' %>
+<%= link_to "Discuss this violation", violation_url(violation.id), :class => 'btn btn-danger' %>
+</h1>
+<% end %>
+</div>
+<footer>
+<h3 id='mailer' class='btn btn-success'><%= mail_to "jimmymowschess@gmail.com", "Feedback".html_safe, subject: "Feedback", :class => 'feedback_link' %></h3>
+</footer>

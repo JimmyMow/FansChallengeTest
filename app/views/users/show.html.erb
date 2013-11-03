@@ -1,0 +1,12 @@
+<style type="text/css">
+  li {
+    list-style-type: none;
+  }
+</style>
+
+<h1><%= @user.username %></h1>
+
+<h3>Challenges: </h3>
+<% @user.violations.each do |violation| %>
+<li><p><%= link_to violation.player.name, player_url(violation.player.id) %> committed <%= violation.name %> during the <%= violation.quarter %> quarter at <%= violation.time %> by <%= link_to violation.ref.number_name, ref_url(violation.ref.id) %>  <%= link_to "", violation_url(violation.id), class: 'btn btn-success   fa fa-arrow-circle-right'  %></p></li>
+<% end %>

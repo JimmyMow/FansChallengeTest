@@ -1,0 +1,107 @@
+<style type="text/css">
+
+.form-control{
+  margin: 5px auto;
+}
+
+#challenge-form{
+  text-align: center;
+  background-color: black;
+  border-radius: 5px;
+}
+
+#violation-list{
+  background-color: #d5dae0;
+  border-radius: 5px;
+}
+
+#violation-list h2{
+  border-bottom: 1px black solid;
+  color: #D9534F;
+}
+
+h1{
+  border-bottom: 2px solid black ;
+  text-align: center;
+}
+
+
+  .mini-profile {
+    background: #dde1e6;
+    border-radius: 5px;
+  }
+
+  #sports-feed {
+  margin-top: 0px;
+  background: #dde1e6;
+  border-radius: 5px;
+}
+
+.badge{
+  float: right;
+  background: #428BCA !important;
+}
+
+.specific-challenge {
+border-bottom: solid 1px white;
+padding: 5px;
+font-size: 18px;
+}
+
+#challenge-form-title {
+  border-bottom: solid 1px white;
+  color: #D5DAE0;
+}
+
+#challenge-button {
+  margin-bottom: 10px;
+}
+
+</style>
+
+<div class='col-lg-12'>
+
+
+<div class="col-lg-4" id= "challenge-form">
+  <h2 id='challenge-form-title'>CHALLENGE A CALL</h2>
+<%= form_tag violations_url, method: 'post' do  %>
+
+
+<%= label_tag 'player', nil, class: 'sr-only' %>
+<%= text_field_tag 'player', nil, placeholder: 'Player', class: 'form-control' %>
+
+<%= label_tag 'violation', nil, class: 'sr-only' %>
+<%= text_field_tag 'violation', nil, placeholder: 'Violation', class: 'form-control' %>
+
+
+<%= label_tag 'quarter', nil, class: 'sr-only' %>
+<%= text_field_tag 'quarter', nil, placeholder: 'Quarter', class: 'form-control' %>
+
+<%= label_tag 'time', nil, class: 'sr-only' %>
+<%= text_field_tag 'time', nil, placeholder: 'Time', class: 'form-control' %>
+
+<%= label_tag 'ref', nil, class: 'sr-only' %>
+<%= text_field_tag 'ref', nil, placeholder: 'Referee', class: 'form-control' %>
+
+<%= label_tag 'description', nil, class: 'sr-only' %>
+<%= text_field_tag 'description', nil, placeholder: 'Description', class: 'form-control' %>
+
+
+<%= hidden_field_tag 'game_id', @game.id %>
+<%= hidden_field_tag 'user_id', current_user.id %>
+
+
+<%= submit_tag "CHALLENGE!", class: 'btn btn-block btn-lg btn-danger', id: 'challenge-button' %>
+<% end %>
+</div>
+
+<div class='col-lg-8 pull-right' id='violation-list'>
+  <h2>Challenges</h2>
+<% @game.violations.reverse.each do |violation| %>
+  <p class='specific-challenge'><%= link_to "#{violation.player.name} commited a #{violation.name} violation. Quarter: #{violation.quarter} Time: #{violation.time} -> #{violation.description}", violation_url(violation.id) %>
+    <span class="badge"><%= violation.comments.count %></span>
+  </p>
+
+<% end %>
+</div>
+</div>

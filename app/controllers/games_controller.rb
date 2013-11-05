@@ -4,11 +4,22 @@ class GamesController < ApplicationController
   end
 
   def new
-
+    @teams = Team.all
+    @refs = Ref.all
   end
 
   def create
+    g = Game.new
+    g.away_team_id = params[:away_team]
+    g.home_team_id = params[:home_team]
 
+    g.save
+
+    GameRef.create(game_id: g.id, ref_id: params[:ref_one])
+    GameRef.create(game_id: g.id, ref_id: params[:ref_two])
+    GameRef.create(game_id: g.id, ref_id: params[:ref_three])
+
+    redirect_to games_url
   end
 
   def edit
@@ -21,8 +32,6 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find_by_id(params[:id])
-    @home_team = Team.find_by_name(params[:home_team])
-    @away_team = Team.find_by_name(params[:away_team])
   end
 
   def destroy

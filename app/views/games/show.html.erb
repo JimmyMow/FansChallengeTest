@@ -63,12 +63,14 @@ font-size: 18px;
 
 
 <div class="col-lg-4" id= "challenge-form">
-  <h2 id='challenge-form-title'>CHALLENGE A CALL</h2>
+  <h2 id='challenge-form-title'>CHALLENGE A VIOLATION</h2>
 <%= form_tag violations_url, method: 'post' do  %>
 
 
-<%= label_tag 'player', nil, class: 'sr-only' %>
-<%= text_field_tag 'player', nil, placeholder: 'Player', class: 'form-control' %>
+<% players_array = @game.away_team.players + @game.home_team.players %>
+
+<%= label_tag "Player" %>
+<%= select_tag 'player', options_from_collection_for_select(players_array, "id", "name")%>
 
 <%= label_tag 'violation', nil, class: 'sr-only' %>
 <%= text_field_tag 'violation', nil, placeholder: 'Violation', class: 'form-control' %>
@@ -80,8 +82,9 @@ font-size: 18px;
 <%= label_tag 'time', nil, class: 'sr-only' %>
 <%= text_field_tag 'time', nil, placeholder: 'Time', class: 'form-control' %>
 
-<%= label_tag 'ref', nil, class: 'sr-only' %>
-<%= text_field_tag 'ref', nil, placeholder: 'Referee', class: 'form-control' %>
+<%= label_tag 'ref' %>
+<%= select_tag 'ref', options_from_collection_for_select(@game.refs, "id", "number_name")%>
+
 
 <%= label_tag 'description', nil, class: 'sr-only' %>
 <%= text_field_tag 'description', nil, placeholder: 'Description', class: 'form-control' %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131103164719) do
+ActiveRecord::Schema.define(version: 20131105225949) do
 
   create_table "comments", force: true do |t|
     t.text     "text"
@@ -23,12 +23,19 @@ ActiveRecord::Schema.define(version: 20131103164719) do
     t.integer  "user_id"
   end
 
+  create_table "game_refs", force: true do |t|
+    t.integer  "game_id"
+    t.integer  "ref_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "games", force: true do |t|
     t.datetime "date_time"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "home_team"
-    t.string   "away_team"
+    t.integer  "away_team_id"
+    t.integer  "home_team_id"
   end
 
   create_table "players", force: true do |t|
@@ -42,7 +49,6 @@ ActiveRecord::Schema.define(version: 20131103164719) do
 
   create_table "refs", force: true do |t|
     t.string   "number_name"
-    t.integer  "game_id"
     t.string   "img"
     t.datetime "created_at"
     t.datetime "updated_at"

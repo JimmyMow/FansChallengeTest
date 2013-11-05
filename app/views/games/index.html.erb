@@ -51,8 +51,8 @@
 
             <% @games.each do |game| %>
               <tr class=''>
-              <td><%= game.away_team %></td>
-              <td><%= game.home_team %></td>
+              <td><%= game.away_team.name %></td>
+              <td><%= game.home_team.name %></td>
               <td><%= game.date_time %></td>
               <td><%= link_to '', "#{game_url(game.id)}?home_team=#{game.home_team}&away_team=#{game.away_team}", class: 'btn btn-success   fa fa-arrow-circle-right' -%></td>
             </tr>

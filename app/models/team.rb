@@ -1,6 +1,9 @@
 class Team < ActiveRecord::Base
 
-  belongs_to :game
+  has_many :games
+  # def self.game
+  #   Game.find_by_team_id(self.id)
+  # end
 
   has_many :players
 end

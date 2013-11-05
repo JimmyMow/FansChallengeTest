@@ -9,11 +9,18 @@ class ViolationsController < ApplicationController
   end
 
   def create
+    player = Player.find_by_id(params[:player]).id
+    ref = Ref.find_by_id(params[:ref]).id
+    violation = Violation.where("player_id = ? AND quarter = ? AND ref_id = ? AND game_id = ? AND name = ? AND time = ?", player, params[:quarter], ref, params[:game_id], params[:violation], params[:time]).first
+
+    if violation.present?
+      redirect_to violation_url(violation.id)
+    else
     v = Violation.new
-    v.player_id = Player.find_by_name(params[:player]).id
+    v.player_id = Player.find_by_id(params[:player]).id
     v.quarter = params[:quarter]
     v.time = params[:time]
-    v.ref_id = Ref.find_by_number_name(params[:ref]).id
+    v.ref_id = Ref.find_by_id(params[:ref]).id
     v.description = params[:description]
     v.game_id = params[:game_id]
     v.name = params[:violation]
@@ -21,6 +28,7 @@ class ViolationsController < ApplicationController
     v.save
 
     redirect_to game_url(params[:game_id])
+    end
   end
 
   def edit

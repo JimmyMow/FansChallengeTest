@@ -1,2 +1,3 @@
-<h1><%= @player.name %></h1>
+<h1><%= @player.name %> on the <%= link_to @player.team.name, team_url(@player.team.id) %></h1>
+
 <h2>Number of calls involved: <%= @player.violations.count %></h2>

@@ -1,0 +1,20 @@
+<%= form_tag  games_url, method: 'post' do %>
+
+<%= label_tag 'away_team' %>
+<%= select_tag 'away_team', options_from_collection_for_select(@teams, "id", "name") %>
+
+<%= label_tag 'home_team' %>
+<%= select_tag 'home_team', options_from_collection_for_select(@teams, "id", "name") %>
+
+<%= label_tag 'ref_one' %>
+<%= select_tag 'ref_one', options_from_collection_for_select(@refs, "id", "number_name") %>
+
+<%= label_tag 'ref_two' %>
+<%= select_tag 'ref_two', options_from_collection_for_select(@refs, "id", "number_name") %>
+
+<%= label_tag 'ref_three' %>
+<%= select_tag 'ref_three', options_from_collection_for_select(@refs, "id", "number_name") %>
+
+<%= submit_tag 'Submit' %>
+
+<% end %>

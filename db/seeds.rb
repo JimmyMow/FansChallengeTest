@@ -120,7 +120,6 @@ teams.each do |team|
     end
   counter += 1
   wait
-  end
 end
 
 

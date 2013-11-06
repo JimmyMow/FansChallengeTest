@@ -11,17 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131106051832) do
+ActiveRecord::Schema.define(version: 20131106024928) do
 
   create_table "comments", force: true do |t|
     t.text     "text"
     t.integer  "violation_id"
     t.integer  "upvote",       default: 0
     t.integer  "downvote",     default: 0
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "user_id"
     t.integer  "foul_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "fouls", force: true do |t|
@@ -30,14 +30,14 @@ ActiveRecord::Schema.define(version: 20131106051832) do
     t.integer  "user_id"
     t.integer  "commit_player_id"
     t.integer  "fouled_player_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "foul_upvote",      default: 0
     t.integer  "foul_downvote",    default: 0
     t.string   "name"
     t.string   "quarter"
     t.string   "time"
     t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "game_refs", force: true do |t|
@@ -49,10 +49,10 @@ ActiveRecord::Schema.define(version: 20131106051832) do
 
   create_table "games", force: true do |t|
     t.datetime "date_time"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "away_team_id"
     t.integer  "home_team_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "players", force: true do |t|
@@ -99,11 +99,11 @@ ActiveRecord::Schema.define(version: 20131106051832) do
     t.string   "description"
     t.integer  "violation_upvote",   default: 0
     t.integer  "violation_downvote", default: 0
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "player_id"
     t.integer  "ref_id"
     t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

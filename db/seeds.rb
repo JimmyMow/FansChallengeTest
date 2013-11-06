@@ -108,14 +108,15 @@ end
 
 #CREATING PLAYER6S FOR EACH TEAM
 wait
+counter = 1
 teams.each do |team|
   team_players(team).each do |player|
     player = player.to_s
     p = Player.new
     p.name = player
-    p.team_id = 1
+    p.team_id = counter
     if p.save
-      p.team_id += 1
+      counter += 1
     end
     wait
   end

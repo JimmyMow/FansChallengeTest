@@ -5,7 +5,8 @@ class CreateComments < ActiveRecord::Migration
       t.integer :violation_id
       t.integer :upvote, :default => 0
       t.integer :downvote, :default => 0
-
+      t.integer :user_id
+      t.integer :foul_id
       t.timestamps
     end
   end

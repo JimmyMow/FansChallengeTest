@@ -7,7 +7,6 @@ class CreateUsers < ActiveRecord::Migration
       t.string :email
       t.integer :challenge_rating
       t.string :password_digest
-
       t.timestamps
     end
   end

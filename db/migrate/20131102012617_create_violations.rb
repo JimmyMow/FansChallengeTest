@@ -8,7 +8,9 @@ class CreateViolations < ActiveRecord::Migration
       t.string :description
       t.integer :violation_upvote, :default => 0
       t.integer :violation_downvote, :default => 0
-
+      t.integer :player_id
+      t.integer :ref_id
+      t.integer :user_id
       t.timestamps
     end
   end

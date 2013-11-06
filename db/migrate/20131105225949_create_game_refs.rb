@@ -3,7 +3,6 @@ class CreateGameRefs < ActiveRecord::Migration
     create_table :game_refs do |t|
       t.integer :game_id
       t.integer :ref_id
-
       t.timestamps
     end
   end

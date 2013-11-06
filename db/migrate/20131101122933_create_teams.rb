@@ -5,7 +5,6 @@ class CreateTeams < ActiveRecord::Migration
       t.string :name
       t.string :img
       t.integer :game_id
-
       t.timestamps
     end
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131105225949) do
+ActiveRecord::Schema.define(version: 20131106051832) do
 
   create_table "comments", force: true do |t|
     t.text     "text"
@@ -21,6 +21,23 @@ ActiveRecord::Schema.define(version: 20131105225949) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.integer  "foul_id"
+  end
+
+  create_table "fouls", force: true do |t|
+    t.integer  "game_id"
+    t.integer  "ref_id"
+    t.integer  "user_id"
+    t.integer  "commit_player_id"
+    t.integer  "fouled_player_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "foul_upvote",      default: 0
+    t.integer  "foul_downvote",    default: 0
+    t.string   "name"
+    t.string   "quarter"
+    t.string   "time"
+    t.string   "description"
   end
 
   create_table "game_refs", force: true do |t|

@@ -24,7 +24,11 @@
            <!--  <h1>Welcome, <a class='mini-profile-username' href="#"><%= current_user.username %></a></h1> -->
            <h1>Welcome, <%= link_to current_user.username, user_url(current_user.id), :class => 'mini-profile-username' %></h1>
           </div>
-          <h3><%= link_to "#{current_user.violations.count} Challenges", user_url(current_user.id) %> </h3>
+          <% if @number_of_challenges ==  1 %>
+          <h3><%= link_to "#{@number_of_challenges} Challenge", user_url(current_user.id) %> </h3>
+          <% else %>
+           <h3><%= link_to "#{@number_of_challenges} Challenges", user_url(current_user.id) %> </h3>
+           <% end %>
           <div class='clearfix'></div>
 
         </div>

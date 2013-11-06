@@ -8,6 +8,7 @@
   text-align: center;
   background-color: black;
   border-radius: 5px;
+  margin-bottom: 10px;
 }
 
 #violation-list{
@@ -57,54 +58,115 @@ font-size: 18px;
   margin-bottom: 10px;
 }
 
+#clearfix {
+  clear: both;
+}
+
 </style>
 
 <div class='col-lg-12'>
+  <div class="col-lg-4" id= "challenge-form">
+    <h2 id='challenge-form-title'>CHALLENGE A VIOLATION</h2>
+    <%= form_tag violations_url, method: 'post' do  %>
 
 
-<div class="col-lg-4" id= "challenge-form">
-  <h2 id='challenge-form-title'>CHALLENGE A VIOLATION</h2>
-<%= form_tag violations_url, method: 'post' do  %>
+    <% players_array = @game.away_team.players + @game.home_team.players %>
+
+    <%= label_tag "Player" %>
+    <%= select_tag 'player', options_from_collection_for_select(players_array, "id", "name")%>
+
+    <%= label_tag 'violation', nil, class: 'sr-only' %>
+    <%= text_field_tag 'violation', nil, placeholder: 'Violation', class: 'form-control' %>
 
 
-<% players_array = @game.away_team.players + @game.home_team.players %>
+    <%= label_tag 'quarter', nil, class: 'sr-only' %>
+    <%= text_field_tag 'quarter', nil, placeholder: 'Quarter', class: 'form-control' %>
 
-<%= label_tag "Player" %>
-<%= select_tag 'player', options_from_collection_for_select(players_array, "id", "name")%>
+    <%= label_tag 'time', nil, class: 'sr-only' %>
+    <%= text_field_tag 'time', nil, placeholder: 'Time', class: 'form-control' %>
 
-<%= label_tag 'violation', nil, class: 'sr-only' %>
-<%= text_field_tag 'violation', nil, placeholder: 'Violation', class: 'form-control' %>
-
-
-<%= label_tag 'quarter', nil, class: 'sr-only' %>
-<%= text_field_tag 'quarter', nil, placeholder: 'Quarter', class: 'form-control' %>
-
-<%= label_tag 'time', nil, class: 'sr-only' %>
-<%= text_field_tag 'time', nil, placeholder: 'Time', class: 'form-control' %>
-
-<%= label_tag 'ref' %>
-<%= select_tag 'ref', options_from_collection_for_select(@game.refs, "id", "number_name")%>
+    <%= label_tag 'ref' %>
+    <%= select_tag 'ref', options_from_collection_for_select(@game.refs, "id", "number_name")%>
 
 
-<%= label_tag 'description', nil, class: 'sr-only' %>
-<%= text_field_tag 'description', nil, placeholder: 'Description', class: 'form-control' %>
+    <%= label_tag 'description', nil, class: 'sr-only' %>
+    <%= text_field_tag 'description', nil, placeholder: 'Description', class: 'form-control' %>
 
 
-<%= hidden_field_tag 'game_id', @game.id %>
-<%= hidden_field_tag 'user_id', current_user.id %>
+    <%= hidden_field_tag 'game_id', @game.id %>
+    <%= hidden_field_tag 'user_id', current_user.id %>
 
 
-<%= submit_tag "CHALLENGE!", class: 'btn btn-block btn-lg btn-danger', id: 'challenge-button' %>
-<% end %>
+    <%= submit_tag "CHALLENGE!", class: 'btn btn-block btn-lg btn-danger', id: 'challenge-button' %>
+    <% end %>
+  </div>
+  <div class='clearfix'></div>
+
+  <div class="col-lg-4" id= "challenge-form">
+    <h2 id='challenge-form-title'>CHALLENGE A FOUL</h2>
+      <%= form_tag fouls_url, method: 'post' do  %>
+
+      <% players_array = @game.away_team.players + @game.home_team.players %>
+
+      <%= label_tag "Commit Player" %>
+      <%= select_tag 'fouled_player', options_from_collection_for_select(players_array, "id", "name")%>
+
+      <%= label_tag "Fouled Player" %>
+      <%= select_tag 'commit_player', options_from_collection_for_select(players_array, "id", "name")%>
+
+      <%= label_tag 'foul', nil, class: 'sr-only' %>
+      <%= text_field_tag 'foul', nil, placeholder: 'Foul', class: 'form-control' %>
+
+
+      <%= label_tag 'quarter', nil, class: 'sr-only' %>
+      <%= text_field_tag 'quarter', nil, placeholder: 'Quarter', class: 'form-control' %>
+
+      <%= label_tag 'time', nil, class: 'sr-only' %>
+      <%= text_field_tag 'time', nil, placeholder: 'Time', class: 'form-control' %>
+
+      <%= label_tag 'ref' %>
+      <%= select_tag 'ref', options_from_collection_for_select(@game.refs, "id", "number_name")%>
+
+
+      <%= label_tag 'description', nil, class: 'sr-only' %>
+      <%= text_field_tag 'description', nil, placeholder: 'Description', class: 'form-control' %>
+
+
+      <%= hidden_field_tag 'game_id', @game.id %>
+      <%= hidden_field_tag 'user_id', current_user.id %>
+
+
+      <%= submit_tag "CHALLENGE!", class: 'btn btn-block btn-lg btn-danger', id: 'challenge-button' %>
+      <% end %>
+  </div>
 </div>
 
 <div class='col-lg-8 pull-right' id='violation-list'>
+  <div class='col-lg-12'>
   <h2>Challenges</h2>
-<% @game.violations.reverse.each do |violation| %>
-  <p class='specific-challenge'><%= link_to "#{violation.player.name} commited a #{violation.name} violation. Quarter: #{violation.quarter} Time: #{violation.time} -> #{violation.description}", violation_url(violation.id) %>
-    <span class="badge"><%= violation.comments.count %></span>
-  </p>
 
+<% challenges = [] %>
+<%@game.violations.reverse.each do |violation| %>
+<% challenges << violation %>
 <% end %>
+<% @game.fouls.reverse.each do |foul| %>
+<% challenges << foul %>
+<% end %>
+
+<% challenges.reverse.each do |challenge| %>
+  <% if challenge.class.to_s == "Violation" %>
+    <p class='specific-challenge'><%= link_to "#{challenge.player.name} commited a #{challenge.name} violation. Quarter: #{challenge.quarter} Time: #{challenge.time} -> #{challenge.description}", violation_url(challenge.id) %>
+      <span class="badge"><%= challenge.comments.count %></span>
+    </p>
+
+  <% elsif challenge.class.to_s == "Foul" %>
+
+    <p class='specific-challenge'><%= link_to "#{challenge.commit_player.name} commited a #{challenge.name} against #{challenge.fouled_player.name}. Quarter: #{challenge.quarter} Time: #{challenge.time} -> #{challenge.description}", foul_url(challenge.id) %>
+      <span class="badge"><%= challenge.comments.count %></span>
+    </p>
+  <% end %>
+<% end %>
+
+  </div>
 </div>
-</div>
+

@@ -1,0 +1,143 @@
+<style type="text/css">
+.comment-vote{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+h1 {
+
+}
+
+.button-upvote{
+  display:inline-block;
+  width:175px;
+  height:175px;
+  border-radius:100px;
+  color:#fff;
+  vertical-align: top;
+  text-align:center;
+  background:#4dae4a;
+  text-decoration:none;
+  margin-right: 50px;
+  margin-bottom:100px;
+}
+
+.button-downvote{
+  display:inline-block;
+  width:175px;
+  height:175px;
+  border-radius:100px;
+  color:#fff;
+  vertical-align: top;
+  text-align:center;
+  background:#ce3c3e;
+  text-decoration:none;
+  margin-left: 50px;
+  margin-bottom: 100px;
+}
+
+#disagree {
+  text-align: right;
+}
+
+.clearfix {
+  clear: both;
+}
+
+#agree {
+  text-align: right;
+  font-size: 30px;
+  color: green;
+}
+
+#disagree {
+  text-align: left;
+  font-size: 30px;
+  color: red;
+}
+
+#tie {
+  font-size: 45px;
+}
+
+.comment-form form {
+  display: inline;
+}
+
+.comment-form {
+  display: inline;
+  font-size: 20px;
+}
+
+#comments {
+
+}
+
+</style>
+<h1><%= link_to @foul.commit_player.name, player_url(@foul.commit_player.id) %> committed <%= @foul.name %> against <%= link_to @foul.fouled_player.name, player_url(@foul.fouled_player.id) %>during quarter <%= @foul.quarter %> at <%= @foul.time %> by <%= link_to @foul.ref.number_name, ref_url(@foul.ref.id) %></h1>
+<%= link_to "Back", game_url(@foul.game_id), class: 'btn btn-primary' %>
+<div>
+<div class='col-lg-12'>
+  <div class= 'col-lg-4', id='agree'>
+<%= form_tag foul_upvote_url, method: 'patch' do %>
+  <%= hidden_field_tag 'foul_id', @foul.id %>
+
+  <%= button_tag "", :class => 'button-upvote btn btn-success fa fa-thumbs-up fa-5x' %>
+<% end %>
+
+</div>
+<div class='col-lg-4'>
+  <p id='<%= @percent_style %>'><%= @percentage %></p>
+</div>
+ <div class= 'col-lg-4', id='disagree'>
+<%= form_tag foul_downvote_url, method: 'patch' do %>
+  <%= hidden_field_tag 'foul_id', @foul.id %>
+
+  <%= button_tag "", :class => 'button-downvote btn btn-lg btn-danger fa fa-thumbs-down fa-5x' %>
+  </div>
+
+
+<% end %>
+
+<div class='clearfix'></div>
+<!-- COMMENTS ----------------------------------------------------------------------------- -->
+
+<div class='comment-form'>
+<%= form_tag create_comment_url do %>
+<%= label_tag 'text', '' %>
+<%= text_field_tag 'text', nil,  placeholder: 'Add a comment...', size: '90', class: 'form-control' %>
+
+<p><%= hidden_field_tag 'foul_id', @foul.id %></p>
+
+<%= submit_tag "Comment", class: 'btn btn-primary' %>
+<% end %>
+</div>
+
+<div id='comments'>
+<% @foul.comments.reverse.each do |comment| %>
+<div id='top'>
+  <div class='comment-form'>
+<%= link_to comment.user.username, user_url(comment.user.id) %>: <%= comment.text %>
+
+<%= form_tag upvote_comment_url, method: 'patch' do %>
+  <%= hidden_field_tag 'comment_id', comment.id %>
+  <%= hidden_field_tag 'foul_id', comment.foul.id %>
+
+  <%= button_tag " #{comment.upvote}", :class => 'comment-vote btn-success fa fa-thumbs-up' %>
+<% end %>
+
+<%= form_tag downvote_comment_url, method: 'patch' do %>
+  <%= hidden_field_tag 'comment_id', comment.id %>
+  <%= hidden_field_tag 'foul_id', comment.foul.id %>
+
+  <%= button_tag " #{comment.downvote}", :class => 'comment-vote btn-danger fa fa-thumbs-down' %>
+
+  <% end %>
+</div>
+
+</div>
+<% end %>
+
+  </div>
+</div>
+

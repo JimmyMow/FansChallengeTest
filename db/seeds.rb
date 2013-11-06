@@ -12,36 +12,10 @@ require 'open-uri'
 require 'nokogiri'
 
 
-# def team_coach(team_name)
-#   # FIND THE TEAM'S CODE
-#   season_schedule_url = Nokogiri::HTML(open('http://api.sportsdatallc.org/nba-t3/games/2013/reg/schedule.xml?api_key=x4n9p2at386n9x9g3trzu3kw'))
-#   puts
-#   games = season_schedule_url.xpath('//game')
-#   teams = []
-#   teams_code = Hash.new
-#   games.each do |game|
-#     away_team = game.xpath('away//@name') + game.xpath('away//@id')
-#     home_team = game.xpath('home//@name') + game.xpath('home//@id')
-#     away_name = game.xpath('away//@name').text
-#     away_id = game.xpath('away//@id').text
-#     teams_code["#{away_name}"] = "#{away_id}"
-#     teams << teams_code
-#   end
-#  @team_code = teams_code["#{team_name}"]
-# # USE CODE TO FIND TEAM'S ROSTER
-#   url = URI.encode("http://api.sportsdatallc.org/nba-t3/teams/#{@team_code}/profile.xml?api_key=x4n9p2at386n9x9g3trzu3kw")
-#   team_url = Nokogiri::HTML(open(url))
-#     coach = team_url.xpath('//coaches/coach/@full_name').first.value
-#     players_full_name = team_url.xpath('//players//@full_name')
-#     all_players = players_full_name.each do |player|
-#        player
-#     end
-#     return coach
-# end
-
-def team_players(team_name)
+def team_coach(team_name)
   # FIND THE TEAM'S CODE
-  season_schedule_url = Nokogiri::HTML(open('http://api.sportsdatallc.org/nba-t3/games/2013/reg/schedule.xml?api_key=x4n9p2at386n9x9g3trzu3kw'))
+  season_schedule_url = Nokogiri::HTML(open('http://api.sportsdatallc.org/nba-t3/games/2013/reg/schedule.xml?api_key=d5wwmmjjqu9bqa4x7zdwqvg5'))
+  puts
   games = season_schedule_url.xpath('//game')
   teams = []
   teams_code = Hash.new
@@ -55,7 +29,33 @@ def team_players(team_name)
   end
  @team_code = teams_code["#{team_name}"]
 # USE CODE TO FIND TEAM'S ROSTER
-  url = URI.encode("http://api.sportsdatallc.org/nba-t3/teams/#{@team_code}/profile.xml?api_key=x4n9p2at386n9x9g3trzu3kw")
+  url = URI.encode("http://api.sportsdatallc.org/nba-t3/teams/#{@team_code}/profile.xml?api_key=d5wwmmjjqu9bqa4x7zdwqvg5")
+  team_url = Nokogiri::HTML(open(url))
+    coach = team_url.xpath('//coaches/coach/@full_name').first.value
+    players_full_name = team_url.xpath('//players//@full_name')
+    all_players = players_full_name.each do |player|
+       player
+    end
+    return coach
+end
+
+def team_players(team_name)
+  # FIND THE TEAM'S CODE
+  season_schedule_url = Nokogiri::HTML(open('http://api.sportsdatallc.org/nba-t3/games/2013/reg/schedule.xml?api_key=d5wwmmjjqu9bqa4x7zdwqvg5'))
+  games = season_schedule_url.xpath('//game')
+  teams = []
+  teams_code = Hash.new
+  games.each do |game|
+    away_team = game.xpath('away//@name') + game.xpath('away//@id')
+    home_team = game.xpath('home//@name') + game.xpath('home//@id')
+    away_name = game.xpath('away//@name').text
+    away_id = game.xpath('away//@id').text
+    teams_code["#{away_name}"] = "#{away_id}"
+    teams << teams_code
+  end
+ @team_code = teams_code["#{team_name}"]
+# USE CODE TO FIND TEAM'S ROSTER
+  url = URI.encode("http://api.sportsdatallc.org/nba-t3/teams/#{@team_code}/profile.xml?api_key=d5wwmmjjqu9bqa4x7zdwqvg5")
   team_url = Nokogiri::HTML(open(url))
     coach = team_url.xpath('//coaches/coach/@full_name').first.value
     players_full_name = team_url.xpath('//players//@full_name')
@@ -84,28 +84,41 @@ def nba_refs
 return refs
 end
 
+#CREATING ALL REFS
+
+nba_refs.each do |ref|
+  r = Ref.new
+  r.number_name = ref
+  r.save
+  wait
+end
 
 
-# nba_refs.each do |ref|
-#   r = Ref.new
-#   r.number_name = ref
-#   r.save
-# end
+#CREATING TEAMS + COACH
+teams = ['Atlanta Hawks', 'Brooklyn Nets', 'Boston Celtics', 'Charlotte Bobcats', 'Chicago Bulls', 'Cleveland Cavaliers', 'Dallas Mavericks', 'Denver Nuggets', 'Detroit Pistons', 'Golden State Warriors', 'Houston Rockets', 'Indiana Pacers', 'Los Angeles Clippers', 'Los Angeles Lakers', 'Memphis Grizzlies', 'Miami Heat', 'Milwaukee Bucks', 'Minnesota Timberwolves', 'New Orleans Pelicans', 'New York Knicks', 'Oklahoma City Thunder', 'Orlando Magic', 'Philadelphia 76ers', 'Phoenix Suns', 'Portland Trail Blazers', 'Sacramento Kings', 'San Antonio Spurs', 'Toronto Raptors', 'Utah Jazz', 'Washington Wizards']
+wait
+teams.each do |name|
+    t = Team.new
+    t.name = name
+    t.coach = team_coach(t.name)
+    wait
+    t.save
+    wait
+end
 
-  # teams = ['Atlanta Hawks1', 'Brooklyn Nets2', 'Boston Celtics3', 'Charlotte Bobcats4', 'Chicago Bulls5', 'Cleveland Cavaliers6', 'Dallas Mavericks7', 'Denver Nuggets8', 'Detroit Pistons9', 'Golden State Warriors10', 'Houston Rockets11', 'Indiana Pacers12', 'Los Angeles Clippers13', 'Los Angeles Lakers14', 'Memphis Grizzlies15', 'Miami Heat16', 'Milwaukee Bucks17', 'Minnesota Timberwolves18', 'New Orleans Pelicans19', 'New York Knicks20', 'Oklahoma City Thunder21', 'Orlando Magic22', 'Philadelphia 76ers23', 'Phoenix Suns24', 'Portland Trail Blazers25', 'Sacramento Kings26', 'San Antonio Spurs27', 'Toronto Raptors28', 'Utah Jazz29', 'Washington Wizards30']
-
-  team_players('Washington Wizards').each do |player|
+#CREATING PLAYER6S FOR EACH TEAM
+wait
+teams.each do |team|
+  team_players(team).each do |player|
     player = player.to_s
     p = Player.new
     p.name = player
-    p.team_id = 30
-    p.save
+    p.team_id = 1
+    if p.save
+      p.team_id += 1
+    end
+    wait
   end
+end
 
-  # teams.each do |name|
-  #   t = Team.new
-  #   t.name = name
-  #   t.coach = team_coach(t.name)
-  #   wait
-  #   t.save
-  # end
+

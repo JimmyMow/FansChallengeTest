@@ -11,6 +11,11 @@
     padding: 10px;
     background-color: #DDE1E6;
     border-radius: 5px;
+    margin-bottom: 10px;
+  }
+
+  #number_of_challenges {
+    color: #CE3E3C;
   }
 
   h1 {
@@ -18,13 +23,22 @@
   }
 </style>
 
-<h1><%= @user.username %></h1>
+<h1><%= @user.username %>(<span id='number_of_challenges'><%= @number_of_challenges %> Challenges</span>)</h1>
 
 <div class='col-lg-8'>
   <div id='user-challenges'>
-    <h3>Challenges: </h3>
+    <h3>Violation Challenges: </h3>
     <% @user.violations.each do |violation| %>
     <li><p><%= link_to violation.player.name, player_url(violation.player.id) %> committed <%= violation.name %> during the <%= violation.quarter %> quarter at <%= violation.time %> by <%= link_to violation.ref.number_name, ref_url(violation.ref.id) %>  <%= link_to "", violation_url(violation.id), class: 'btn btn-success   fa fa-arrow-circle-right'  %></p></li>
+    <% end %>
+  </div>
+</div>
+
+<div class='col-lg-8'>
+  <div id='user-challenges'>
+    <h3>Foul Challenges: </h3>
+    <% @user.fouls.each do |foul| %>
+    <li><p><%= link_to foul.commit_player.name, player_url(foul.commit_player.id) %> committed <%= foul.name %> on <%= link_to foul.fouled_player.name, player_url(foul.fouled_player.id) %> in quarter <%= foul.quarter %> quarter at <%= foul.time %> by <%= link_to foul.ref.number_name, ref_url(foul.ref.id) %>  <%= link_to "", foul_url(foul.id), class: 'btn btn-success   fa fa-arrow-circle-right'  %></p></li>
     <% end %>
   </div>
 </div>

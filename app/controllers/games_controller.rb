@@ -1,6 +1,7 @@
 class GamesController < ApplicationController
   def index
     @games = Game.all
+    @number_of_challenges = current_user.violations.count + current_user.fouls.count
   end
 
   def new

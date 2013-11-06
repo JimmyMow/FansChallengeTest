@@ -72,5 +72,11 @@ FansChallengeTest::Application.routes.draw do
   #REFS
   resources :refs
 
+  #FOULS
+  resources :fouls
+  patch '/foul_upvote' => 'fouls#foul_upvote', as: 'foul_upvote'
+
+  patch '/foul_downvote' => 'fouls#foul_downvote', as: 'foul_downvote'
+
 
 end

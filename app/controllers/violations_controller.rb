@@ -1,7 +1,7 @@
 class ViolationsController < ApplicationController
 
   def index
-    @violations = Call.all
+    @violations = Violation.all
   end
 
   def new
@@ -11,7 +11,7 @@ class ViolationsController < ApplicationController
   def create
     player = Player.find_by_id(params[:player]).id
     ref = Ref.find_by_id(params[:ref]).id
-    violation = Violation.where("player_id = ? AND quarter = ? AND ref_id = ? AND game_id = ? AND name = ? AND time = ?", player, params[:quarter], ref, params[:game_id], params[:violation], params[:time]).first
+    violation = Violation.where("player_id = ? AND quarter = ? AND ref_id = ? AND game_id = ? AND name = ? AND time = ?", player, params[:quarter], ref, params[:game_id], params[:violation].capitalize, params[:time]).first
 
     if violation.present?
       redirect_to violation_url(violation.id)

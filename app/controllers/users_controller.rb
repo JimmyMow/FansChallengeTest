@@ -20,5 +20,6 @@ end
 
 def show
   @user = User.find_by_id(params[:id])
+  @number_of_challenges = current_user.violations.count + current_user.fouls.count
 end
 end

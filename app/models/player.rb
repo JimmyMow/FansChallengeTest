@@ -6,5 +6,6 @@ class Player < ActiveRecord::Base
   # end
 
   has_many :violations
+  has_many :fouls
 
 end

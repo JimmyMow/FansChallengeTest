@@ -1,7 +1,7 @@
 <h2>Fuck These violations:</h2>
 
 <div class='container'>
-<% @violations.each do |violations| %>
+<% @violations.each do |violation| %>
 
 <h1><%= link_to "#{violation.description}", violation_url(violation.id), :class => 'description' %>
 <%= link_to "Discuss this violation", violation_url(violation.id), :class => 'btn btn-danger' %>

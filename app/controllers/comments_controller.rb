@@ -5,11 +5,15 @@ class CommentsController < ApplicationController
     @c = Comment.new
     @c.text = params[:text]
     @c.violation_id = params[:violation_id]
+    @c.foul_id = params[:foul_id]
     @c.user_id = current_user.id
     @c.save
 
-    redirect_to violation_url(params[:violation_id])
-
+    if @c.violation_id.present?
+      redirect_to violation_url(params[:violation_id])
+    elsif @c.foul_id.present?
+      redirect_to foul_url(params[:foul_id])
+    end
   end
 
   def upvote

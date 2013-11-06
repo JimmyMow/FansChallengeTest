@@ -1,3 +1,6 @@
-<h1><%= @player.name %> on the <%= link_to @player.team.name, team_url(@player.team.id) %></h1>
+<h1><%= @player.name %> plays on the <%= link_to @player.team.name, team_url(@player.team.id) %></h1>
 
-<h2>Number of calls involved: <%= @player.violations.count %></h2>
+<h2>Number of violations commited: <%= @player.violations.count %></h2>
+<h2>Number of fouls commited: <%= Foul.where(:commit_player_id => @player.id).count %></h2>
+<h2>Number of times fouled: <%= Foul.where(:fouled_player_id => @player.id).count %></h2>
+

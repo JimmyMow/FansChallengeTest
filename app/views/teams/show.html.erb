@@ -1,6 +1,18 @@
 <h1><%= @team.name %></h1>
 <h3>Head Coach: <%= @team.coach %></h3>
+<% players = Player.where(:team_id => @team.id) %>
+<% violations = 0 %>
+<% commits = 0 %>
+<% fouled = 0 %>
+<% players.each do |player| %>
+  <% violations += player.violations.count %>
+  <% commits += Foul.where(:commit_player_id => player.id).count %>
+  <% fouled += Foul.where(:fouled_player_id => player.id).count %>
+<% end %>
 
+<h2>Number of violations commited: <%= violations %></h2>
+<h2>Number of fouls commited: <%= commits %></h2>
+<h2>Number of times fouled: <%= fouled %></h2>
 
   <% @team.players.each do |player|  %>
     <p><%= link_to player.name, player_url(player.id) %></p>

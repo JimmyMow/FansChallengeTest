@@ -14,7 +14,7 @@ require 'nokogiri'
 
 def team_coach(team_name)
   # FIND THE TEAM'S CODE
-  season_schedule_url = Nokogiri::HTML(open('http://api.sportsdatallc.org/nba-t3/games/2013/reg/schedule.xml?api_key=d5wwmmjjqu9bqa4x7zdwqvg5'))
+  season_schedule_url = Nokogiri::HTML(open('http://api.sportsdatallc.org/nba-t3/games/2013/reg/schedule.xml?api_key=z6x4nqbnhcvtjbjd3bnvfp3c'))
   puts
   games = season_schedule_url.xpath('//game')
   teams = []
@@ -29,7 +29,7 @@ def team_coach(team_name)
   end
  @team_code = teams_code["#{team_name}"]
 # USE CODE TO FIND TEAM'S ROSTER
-  url = URI.encode("http://api.sportsdatallc.org/nba-t3/teams/#{@team_code}/profile.xml?api_key=d5wwmmjjqu9bqa4x7zdwqvg5")
+  url = URI.encode("http://api.sportsdatallc.org/nba-t3/teams/#{@team_code}/profile.xml?api_key=z6x4nqbnhcvtjbjd3bnvfp3c")
   team_url = Nokogiri::HTML(open(url))
     coach = team_url.xpath('//coaches/coach/@full_name').first.value
     players_full_name = team_url.xpath('//players//@full_name')
@@ -41,7 +41,7 @@ end
 
 def team_players(team_name)
   # FIND THE TEAM'S CODE
-  season_schedule_url = Nokogiri::HTML(open('http://api.sportsdatallc.org/nba-t3/games/2013/reg/schedule.xml?api_key=d5wwmmjjqu9bqa4x7zdwqvg5'))
+  season_schedule_url = Nokogiri::HTML(open('http://api.sportsdatallc.org/nba-t3/games/2013/reg/schedule.xml?api_key=z6x4nqbnhcvtjbjd3bnvfp3c'))
   games = season_schedule_url.xpath('//game')
   teams = []
   teams_code = Hash.new
@@ -55,7 +55,7 @@ def team_players(team_name)
   end
  @team_code = teams_code["#{team_name}"]
 # USE CODE TO FIND TEAM'S ROSTER
-  url = URI.encode("http://api.sportsdatallc.org/nba-t3/teams/#{@team_code}/profile.xml?api_key=d5wwmmjjqu9bqa4x7zdwqvg5")
+  url = URI.encode("http://api.sportsdatallc.org/nba-t3/teams/#{@team_code}/profile.xml?api_key=z6x4nqbnhcvtjbjd3bnvfp3c")
   team_url = Nokogiri::HTML(open(url))
     coach = team_url.xpath('//coaches/coach/@full_name').first.value
     players_full_name = team_url.xpath('//players//@full_name')
